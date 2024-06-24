@@ -105,7 +105,7 @@ public:
 		this->attendance = attendance;
 	}
 
-	//    
+	//                  Constructtors:
 	Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS)
 	{
 		set_speciality(speciality);
