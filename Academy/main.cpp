@@ -1,4 +1,5 @@
 ﻿#include<iostream>
+#include<string>
 using namespace std;
 
 #define delimiter "\n---------------------------\n"
@@ -60,7 +61,16 @@ public:
 	{
 		cout << last_name << " " << first_name << " " << age << " y/o" << endl;
 	}
+	virtual std::ostream& info(std::ostream& os)const
+	{
+		return os << last_name << " " << first_name << " " << age << " y/o";
+	}
 };
+
+std::ostream& operator<<(std::ostream& os, const Human& obj)
+{
+	return obj.info(os);
+}
 
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS speciality, group, rating, attendance
@@ -125,6 +135,11 @@ public:
 		Human::info();
 		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
 	}
+	std::ostream& info(std::ostream& os)const override //переопределить
+	{
+		return Human::info(os) << " "
+			<< speciality << " " << group << " " << rating << " " << attendance;
+	}
 };
 
 class Teacher : public Human
@@ -149,7 +164,7 @@ public:
 		this->experience = experience;
 	}
 
-	//           Constructors:
+	//                    Constructors:
 	Teacher(HUMAN_TAKE_PARAMETERS, const std::string& speciality, unsigned int experience):
 		Human(HUMAN_GIVE_PARAMETERS)
 	{
@@ -162,11 +177,15 @@ public:
 		cout << "TDestructor:\t" << this << endl;
 	}
 
-	//                Methods:
+	//                       Methods:
 	void info()const
 	{
 		Human::info();
 		cout << speciality << " " << experience << " years" << endl;
+	}
+	std::ostream& info(std::ostream& os)const
+	{
+		return Human::info(os) << " " << speciality << " " << experience << " years" << endl;
 	}
 };
 
@@ -200,6 +219,10 @@ public:
 	{
 		Student::info();
 		cout << subject << endl;
+	}
+	std::ostream& info(std::ostream& os)const override
+	{
+		return Student::info(os) << " " << subject << endl;
 	}
 };
 
