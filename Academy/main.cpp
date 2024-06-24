@@ -9,7 +9,6 @@ using std::endl;
 
 #define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age
 #define HUMAN_GIVE_PARAMETERS  last_name, first_name, age
-#define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 
 class Human
 {
@@ -63,6 +62,9 @@ public:
 	}
 };
 
+#define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
+#define STUDENT_GIVE_PARAMETERS speciality, group, rating, attendance
+
 class Student :public Human
 {
 	std::string speciality;
@@ -104,11 +106,7 @@ public:
 	}
 
 	//    
-	Student
-	(
-		HUMAN_TAKE_PARAMETERS,
-		STUDENT_TAKE_PARAMETERS
-	) :Human(HUMAN_GIVE_PARAMETERS)
+	Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS)
 	{
 		set_speciality(speciality);
 		set_group(group);
@@ -152,7 +150,8 @@ public:
 	}
 
 	//           Constructors:
-	Teacher(HUMAN_TAKE_PARAMETERS, const std::string& speciality, unsigned int experience) :Human(HUMAN_GIVE_PARAMETERS)
+	Teacher(HUMAN_TAKE_PARAMETERS, const std::string& speciality, unsigned int experience):
+		Human(HUMAN_GIVE_PARAMETERS)
 	{
 		set_speciality(speciality);
 		set_experience(experience);
@@ -187,6 +186,17 @@ void main()
 	teacher.info();
 #endif // INHERITANCE_CHECK
 
+	/*
+	Plymorphism (Poly - много, Morphis - форма)
+	--------------------
+	AdHoc Polymorphism - Статический полиморфизм.
+	--------------------
+	Inclusion Polymorphism
+	1. Base Class Pointer - Generalization;
+	2. virtual functions;
+		VFPTR - Virtual Functions Pointers (Таблица указателей на виртуальные функции)
+	*/
+
 	//    Generalization
 	Human* group[] =
 	{
@@ -197,8 +207,9 @@ void main()
 	cout << delimiter << endl;
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
-		group[i]->info();
+		//group[i]->info();
+		cout << *group[i] << endl;
 		cout << delimiter << endl;
 	}
-		//Hello
+		
 }
