@@ -50,7 +50,7 @@ public:
 		set_age(age);
 		cout << "HConstructor:\t" << this << endl;
 	}
-	~Human()
+	virtual ~Human()
 	{
 		cout << "HDestructor:\t" << this << endl;
 	}
@@ -183,7 +183,7 @@ public:
 		this->subject = subject;
 	}
 
-	//                 Construktors:
+	//                 Constructors:
 	Graduate(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS, const std::string& subject) :
 		Student(HUMAN_GIVE_PARAMETERS, STUDENT_GIVE_PARAMETERS)
 	{
@@ -255,5 +255,9 @@ void main()
 		//cout << *group[i] << endl;
 		cout << delimiter << endl;
 	}
-		
+	
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		delete group[i];
+	}
 }
