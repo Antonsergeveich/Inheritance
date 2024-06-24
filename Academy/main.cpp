@@ -187,16 +187,26 @@ void main()
 #endif // INHERITANCE_CHECK
 
 	/*
-	Plymorphism (Poly - много, Morphis - форма)
+	Plymorphism (Poly - много, Morphis - форма) Многоформенность
 	--------------------
-	AdHoc Polymorphism - Статический полиморфизм.
+	AdHoc Polymorphism - Static polymorphism (поскольку отрабатывает на этапе компиляции),
+	это способность объектов вести себя по разному в зависимости от обстоятельств;
+	Реализуется перегрузкой функций и в частности перегрузкой операторов;
 	--------------------
-	Inclusion Polymorphism
-	1. Base Class Pointer - Generalization;
-	2. virtual functions;
+	Inclusion Polymorphism - Полиморфизм подтипов;
+	это способность объектов  вести себя по разному, в зависимости от того, кем они являются;
+	Realization:
+	1. Base Class Pointer - Generalization (Обобщение) Указатели на базовый класс;
+	The address of the child object can be saved in the pointer to the base class
+	(в указатель на базовый класс можно сохранить адрес дочернего объекта);
+	2. Virtual functions;(единственная возможнасть заглянуть из базового класса в дочерний);
+	Виртуальным метод - это метод который может быть переопределён 
+	в дочернем классе с учётом его полей;
 		VFPTR - Virtual Functions Pointers (Таблица указателей на виртуальные функции)
+		При переопрееделении виртуальной функции в дочернем классе 
+		её обязательно нужно обозначить ключевым словом
+		OVERRIDE;
 	*/
-
 	//    Generalization
 	Human* group[] =
 	{
@@ -208,7 +218,7 @@ void main()
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
 		//group[i]->info();
-		cout << *group[i] << endl;
+		cout << group[i] << endl;
 		cout << delimiter << endl;
 	}
 		
