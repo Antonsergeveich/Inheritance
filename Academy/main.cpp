@@ -120,7 +120,7 @@ public:
 	}
 
 	//              Methods:
-	void info()const override //переопределение
+	void info()const override //переопределить
 	{
 		Human::info();
 		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
