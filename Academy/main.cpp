@@ -170,6 +170,39 @@ public:
 	}
 };
 
+class Graduate : public Student
+{
+	std::string subject;
+public:
+	const std::string& get_subject()const
+	{
+		return subject;
+	}
+	void set_subject(const std::string& subject)
+	{
+		this->subject = subject;
+	}
+
+	//                 Construktors:
+	Graduate(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS, const std::string& subject) :
+		Student(HUMAN_GIVE_PARAMETERS, STUDENT_GIVE_PARAMETERS)
+	{
+		set_subject(subject);
+		cout << "GConstructor:\t" << this << endl;
+	}
+	~Graduate()
+	{
+		cout << "GDestructor:\t" << this << endl;
+	}
+
+	//     Methods:
+	void info()const override
+	{
+		Student::info();
+		cout << subject << endl;
+	}
+};
+
 //#define INHERITANCE_CHECK
 
 void main()
@@ -212,13 +245,14 @@ void main()
 	{
 		new Student("Pinkman", "Jessie", 22, "Chemistry", "WW_220", 70, 97),
 		new Teacher("White", "Walter", 50, "Chemistry", 25),
+		new Graduate("Schreder","Hank",40,"Criminalisttic","OBN", 80,90, "How to catch Heisenberg"),
 		new Student("Vercetty", "Tommy", 30, "Theft", "Vice", 97, 98)
 	};
 	cout << delimiter << endl;
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
-		//group[i]->info();
-		cout << group[i] << endl;
+		group[i]->info();
+		//cout << *group[i] << endl;
 		cout << delimiter << endl;
 	}
 		
