@@ -264,7 +264,7 @@ void main()
 		её обязательно нужно обозначить ключевым словом
 		OVERRIDE;
 	*/
-	//    Generalization
+	//    Generalization (UpCast) обобщение:
 	Human* group[] =
 	{
 		new Student("Pinkman", "Jessie", 22, "Chemistry", "WW_220", 70, 97),
@@ -272,13 +272,14 @@ void main()
 		new Graduate("Schreder","Hank",40,"Criminalisttic","OBN", 80,90, "How to catch Heisenberg"),
 		new Student("Vercetty", "Tommy", 30, "Theft", "Vice", 97, 98)
 	};
+
 	cout << delimiter << endl;
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
 		//group[i]->info();
 		cout << typeid(*group[i]).name() << ":\t";
 		//https://legacy.cplusplus.com/doc/tutorial/typecasting/
-		//Specialization (DownCast):
+		//Specialization (DownCast) - уточнение:
 		if (typeid(*group[i]) == typeid(Student))cout << *dynamic_cast<Student*>(group[i]) << endl;
 		if (typeid(*group[i]) == typeid(Teacher))cout << *dynamic_cast<Teacher*>(group[i]) << endl;
 		if (typeid(*group[i]) == typeid(Graduate))cout << *dynamic_cast<Graduate*>(group[i]) << endl;
