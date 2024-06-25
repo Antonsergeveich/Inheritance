@@ -228,7 +228,6 @@ std::ostream& operator<<(std::ostream& os, const Graduate& obj)
 }
 
 //#define INHERITANCE_CHECK
-
 void main()
 {
 	setlocale(LC_ALL, "");
