@@ -61,15 +61,13 @@ public:
 	{
 		cout << last_name << " " << first_name << " " << age << " y/o" << endl;
 	}
-	virtual std::ostream& info(std::ostream& os)const
-	{
-		return os << last_name << " " << first_name << " " << age << " y/o";
-	}
+
 };
 
+//dynamic_cast<>()
 std::ostream& operator<<(std::ostream& os, const Human& obj)
 {
-	return obj.info(os);
+	return os << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age() << " y/o";
 }
 
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
@@ -135,12 +133,13 @@ public:
 		Human::info();
 		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
 	}
-	std::ostream& info(std::ostream& os)const override //переопределить
-	{
-		return Human::info(os) << " "
-			<< speciality << " " << group << " " << rating << " " << attendance;
-	}
 };
+
+std::ostream& operator<<(std::ostream& os, const Student& obj) //переопределить
+{
+	return os << (Human)obj << " "
+		<< obj.get_speciality() << " " << obj.get_group() << " " << obj.get_rating() << " " << obj.get_attendance();
+}
 
 class Teacher : public Human
 {
@@ -165,7 +164,7 @@ public:
 	}
 
 	//                    Constructors:
-	Teacher(HUMAN_TAKE_PARAMETERS, const std::string& speciality, unsigned int experience):
+	Teacher(HUMAN_TAKE_PARAMETERS, const std::string& speciality, unsigned int experience) :
 		Human(HUMAN_GIVE_PARAMETERS)
 	{
 		set_speciality(speciality);
@@ -183,11 +182,12 @@ public:
 		Human::info();
 		cout << speciality << " " << experience << " years" << endl;
 	}
-	std::ostream& info(std::ostream& os)const
-	{
-		return Human::info(os) << " " << speciality << " " << experience << " years" << endl;
-	}
 };
+
+std::ostream& operator<<(std::ostream& os, const Teacher& obj)
+{
+	return os << (Human)obj << " " << obj.get_speciality() << " " << obj.get_experience() << " y/o";
+}
 
 class Graduate : public Student
 {
@@ -220,11 +220,12 @@ public:
 		Student::info();
 		cout << subject << endl;
 	}
-	std::ostream& info(std::ostream& os)const override
-	{
-		return Student::info(os) << " " << subject << endl;
-	}
 };
+
+std::ostream& operator<<(std::ostream& os, const Graduate& obj)
+{
+	return os << (Student&)obj << " " << obj.get_subject();
+}
 
 //#define INHERITANCE_CHECK
 
@@ -256,10 +257,10 @@ void main()
 	The address of the child object can be saved in the pointer to the base class
 	(в указатель на базовый класс можно сохранить адрес дочернего объекта);
 	2. Virtual functions;(единственная возможнасть заглянуть из базового класса в дочерний);
-	Виртуальным метод - это метод который может быть переопределён 
+	Виртуальным метод - это метод который может быть переопределён
 	в дочернем классе с учётом его полей;
 		VFPTR - Virtual Functions Pointers (Таблица указателей на виртуальные функции)
-		При переопределении виртуальной функции в дочернем классе 
+		При переопределении виртуальной функции в дочернем классе
 		её обязательно нужно обозначить ключевым словом
 		OVERRIDE;
 	*/
@@ -275,10 +276,16 @@ void main()
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
 		//group[i]->info();
-		cout << *group[i] << endl;
+		cout << typeid(*group[i]).name() << ":\t";
+		//https://legacy.cplusplus.com/doc/tutorial/typecasting/
+		//Specialization (DownCast):
+		if (typeid(*group[i]) == typeid(Student))cout << *dynamic_cast<Student*>(group[i]) << endl;
+		if (typeid(*group[i]) == typeid(Teacher))cout << *dynamic_cast<Teacher*>(group[i]) << endl;
+		if (typeid(*group[i]) == typeid(Graduate))cout << *dynamic_cast<Graduate*>(group[i]) << endl;
 		cout << delimiter << endl;
+		//member-function
 	}
-	
+
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
 		delete group[i];
