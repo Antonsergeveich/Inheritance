@@ -282,10 +282,13 @@ void main()
 	Inclusion Polymorphism - Полиморфизм подтипов;
 	это способность объектов  вести себя по разному, в зависимости от того, кем они являются;
 	Realization:
+
 	1. Base Class Pointer - Generalization (Обобщение) Указатели на базовый класс;
 	The address of the child object can be saved in the pointer to the base class
 	(в указатель на базовый класс можно сохранить адрес дочернего объекта);
-	2. Virtual functions;(единственная возможнасть заглянуть из базового класса в дочерний);
+	Upcast (приведение к базовому типу);
+	2. Virtual functions - Specialization (уточнение) единственная возможнасть заглянуть из базового класса в дочерний;
+	DownCast
 	Виртуальным метод - это метод который может быть переопределён 
 	в дочернем классе с учётом его полей;
 		VFPTR - Virtual Functions Pointers (Таблица указателей на виртуальные функции)
