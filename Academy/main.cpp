@@ -273,7 +273,7 @@ void main()
 #endif // INHERITANCE_CHECK
 
 	/*
-	Plymorphism (Poly - много, Morphis - форма) Многоформенность
+	Polymorphism (Poly - много, Morphis - форма) Многоформенность
 	--------------------
 	AdHoc Polymorphism - Static polymorphism (поскольку отрабатывает на этапе компиляции),
 	это способность объектов вести себя по разному в зависимости от обстоятельств;
