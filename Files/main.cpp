@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+п»ї#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include<fstream>
 #include<ctime> //time.h
@@ -16,33 +16,33 @@ void main()
 	setlocale(LC_ALL, "");
 
 #ifdef WRITE_TO_FILE
-	std::ofstream fout;           //1) Создаём поток:
-	fout.open("File.txt", std::ios_base::app);        //2) Открываем поток:м
-	// std::ios_base::app - append (дописать конец файла) сколько раз открыл файл, столько раз дозаписал HelloWorld;
-	fout << "HelloWorld" << endl; //3) Пишем в поток.
+	std::ofstream fout;           //1) РЎРѕР·РґР°С‘Рј РїРѕС‚РѕРє:
+	fout.open("File.txt", std::ios_base::app);        //2) РћС‚РєСЂС‹РІР°РµРј РїРѕС‚РѕРє:Рј
+	// std::ios_base::app - append (РґРѕРїРёСЃР°С‚СЊ РєРѕРЅРµС† С„Р°Р№Р»Р°) СЃРєРѕР»СЊРєРѕ СЂР°Р· РѕС‚РєСЂС‹Р» С„Р°Р№Р», СЃС‚РѕР»СЊРєРѕ СЂР°Р· РґРѕР·Р°РїРёСЃР°Р» HelloWorld;
+	fout << "HelloWorld" << endl; //3) РџРёС€РµРј РІ РїРѕС‚РѕРє.
 	time_t now = time(NULL);
 	fout << ctime(&now) << endl;
 
-	fout.close();                 //4) Закрываем поток.
-	// Если открыл "fout.open()", то  ОБЯЗАТЕЛЬНО !!! закрой "fout.close()", как холодильник;
-	// Solution Explorer -> правой кнопкой на проект -> Open Folder in File Explorer; 
+	fout.close();                 //4) Р—Р°РєСЂС‹РІР°РµРј РїРѕС‚РѕРє.
+	// Р•СЃР»Рё РѕС‚РєСЂС‹Р» "fout.open()", С‚Рѕ  РћР‘РЇР—РђРўР•Р›Р¬РќРћ !!! Р·Р°РєСЂРѕР№ "fout.close()", РєР°Рє С…РѕР»РѕРґРёР»СЊРЅРёРє;
+	// Solution Explorer -> РїСЂР°РІРѕР№ РєРЅРѕРїРєРѕР№ РЅР° РїСЂРѕРµРєС‚ -> Open Folder in File Explorer; 
 
-	system("notepad File.txt"); // открывает окно файла  
+	system("notepad File.txt"); // РѕС‚РєСЂС‹РІР°РµС‚ РѕРєРЅРѕ С„Р°Р№Р»Р°  
 #endif // WRITE_TO_FILE
 
 #ifdef READ_TO_FILE
-	//1)Создаём и открываем поток:
+	//1)РЎРѕР·РґР°С‘Рј Рё РѕС‚РєСЂС‹РІР°РµРј РїРѕС‚РѕРє:
 	std::ifstream fin("File.txt");
 	if (fin.is_open())
 	{
-		//Здесь будем читать файл:
-		const int SIZE = 256; //размер буфера
-		char buffer[SIZE]{};  //буфер
+		//Р—РґРµСЃСЊ Р±СѓРґРµРј С‡РёС‚Р°С‚СЊ С„Р°Р№Р»:
+		const int SIZE = 256; //СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР°
+		char buffer[SIZE]{};  //Р±СѓС„РµСЂ
 
 		while (!fin.eof())    //NOT EndOfFile
 		{
 			//fin >> buffer;
-			fin.getline(buffer, SIZE);  //Читает строку с пробелами
+			fin.getline(buffer, SIZE);  //Р§РёС‚Р°РµС‚ СЃС‚СЂРѕРєСѓ СЃ РїСЂРѕР±РµР»Р°РјРё
 			cout << buffer << endl;
 		}
 
