@@ -14,6 +14,11 @@ using std::endl;
 
 class Human
 {
+	static const int HUMAN_TYPE_WIDTH = 15;
+	static const int LAST_NAME_WIDTH = 15;
+	static const int FIRST_NAME_WIDTH = 15;
+	static const int AGE_WIDTH = 5;
+
 	std::string last_name;
 	std::string first_name;
 	unsigned int age;
@@ -60,11 +65,20 @@ public:
 	//               Methods:
 	virtual void info()const
 	{
-		cout << last_name << " " << first_name << " " << age << " y/o" << endl;
+		cout << last_name << " " << first_name << " " << age << " y/o";
 	}
 	virtual std::ostream& info(std::ostream& os)const
 	{
 		return os << last_name << " " << first_name << " " << age << " y/o";
+	}
+	virtual std::ofstream& info(std::ofstream& ofs)const
+	{
+		//ofs << strchr(typeid(*this).name(), ' ') + 1 << ":\t" << last_name << " " << first_name << " " << age;
+		ofs.width(HUMAN_TYPE_WIDTH); ofs << left << std::string(strchr(typeid(*this).name(), ' ') + 1) + ":";
+		ofs.width(LAST_NAME_WIDTH);  ofs << left << last_name;
+		ofs.width(FIRST_NAME_WIDTH); ofs << left << first_name;
+		ofs.width(AGE_WIDTH);        ofs << left << age;
+		return ofs;
 	}
 };
 
@@ -72,12 +86,20 @@ std::ostream& operator<<(std::ostream& os, const Human& obj)
 {
 	return obj.info(os);
 }
+std::ofstream& operator<<(std::ofstream& ofs, const Human& obj)
+{
+	return obj.info(ofs);
+}
 
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS speciality, group, rating, attendance
 
 class Student :public Human
 {
+	static const int  SPECIALITY_WIDTH = 25;
+	static const int  GROUP_WIDTH = 8;
+	static const int  RATING_WIDTH = 8;
+	static const int  ATTENDANCE_WIDTH = 8;
 	std::string speciality;
 	std::string group;
 	double rating;
@@ -134,17 +156,28 @@ public:
 	void info()const override //переопределить
 	{
 		Human::info();
-		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
+		cout << speciality << " " << group << " " << rating << " " << attendance;
 	}
 	std::ostream& info(std::ostream& os)const override //переопределить
 	{
 		return Human::info(os) << " "
 			<< speciality << " " << group << " " << rating << " " << attendance;
 	}
+	std::ofstream& info(std::ofstream& ofs)const override
+	{
+		Human::info(ofs);
+		ofs.width(SPECIALITY_WIDTH); ofs << speciality;
+		ofs.width(GROUP_WIDTH);      ofs << group;
+		ofs.width(RATING_WIDTH);     ofs << rating;
+		ofs.width(ATTENDANCE_WIDTH); ofs << attendance;
+		return ofs;
+	}
 };
 
 class Teacher : public Human
 {
+	static const int SPECIALITY_WIDTH = 25;
+	static const int EXPERIENCE_WIDTH = 5;
 	std::string speciality;
 	unsigned int experience;
 public:
@@ -166,7 +199,7 @@ public:
 	}
 
 	//                    Constructors:
-	Teacher(HUMAN_TAKE_PARAMETERS, const std::string& speciality, unsigned int experience):
+	Teacher(HUMAN_TAKE_PARAMETERS, const std::string& speciality, unsigned int experience) :
 		Human(HUMAN_GIVE_PARAMETERS)
 	{
 		set_speciality(speciality);
@@ -182,16 +215,24 @@ public:
 	void info()const
 	{
 		Human::info();
-		cout << speciality << " " << experience << " years" << endl;
+		cout << speciality << " " << experience << " years";
 	}
 	std::ostream& info(std::ostream& os)const
 	{
 		return Human::info(os) << " " << speciality << " " << experience << " years";
 	}
+	std::ofstream& info(std::ofstream& ofs)const override
+	{
+		Human::info(ofs);
+		ofs.width(SPECIALITY_WIDTH);ofs << speciality;
+		ofs.width(EXPERIENCE_WIDTH);ofs << experience;
+		return ofs;
+	}
 };
 
 class Graduate : public Student
 {
+	static const int SUBJECT_WIDTH = 32;
 	std::string subject;
 public:
 	const std::string& get_subject()const
@@ -224,6 +265,12 @@ public:
 	std::ostream& info(std::ostream& os)const override
 	{
 		return Student::info(os) << " " << subject;
+	}
+	std::ofstream& info(std::ofstream& ofs)const override
+	{
+		Student::info(ofs);
+		ofs.width(SUBJECT_WIDTH); ofs << subject;
+		return ofs;
 	}
 };
 
@@ -289,10 +336,10 @@ void main()
 	Upcast (приведение к базовому типу);
 	2. Virtual functions - Specialization (уточнение) единственная возможнасть заглянуть из базового класса в дочерний;
 	DownCast
-	Виртуальным метод - это метод который может быть переопределён 
+	Виртуальным метод - это метод который может быть переопределён
 	в дочернем классе с учётом его полей;
 		VFPTR - Virtual Functions Pointers (Таблица указателей на виртуальные функции)
-		При переопределении виртуальной функции в дочернем классе 
+		При переопределении виртуальной функции в дочернем классе
 		её обязательно нужно обозначить ключевым словом
 		OVERRIDE;
 	*/
@@ -302,7 +349,8 @@ void main()
 		new Student("Pinkman", "Jessie", 22, "Chemistry", "WW_220", 70, 97),
 		new Teacher("White", "Walter", 50, "Chemistry", 25),
 		new Graduate("Schreder","Hank",40,"Criminalisttic","OBN", 80,90, "How to catch Heisenberg"),
-		new Student("Vercetty", "Tommy", 30, "Theft", "Vice", 97, 98)
+		new Student("Vercetty", "Tommy", 30, "Theft", "Vice", 97, 98),
+		new Teacher("Diaz","Ricardo", 50, "Weapons distribution", 20)
 	};
 	Print(group, sizeof(group) / sizeof(group[0]));
 	Save(group, sizeof(group) / sizeof(group[0]), "group.txt");
