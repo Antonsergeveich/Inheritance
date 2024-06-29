@@ -16,10 +16,10 @@ void main()
 	setlocale(LC_ALL, "");
 
 #ifdef WRITE_TO_FILE
-	std::ofstream fout;                               //1) Создаём поток:
-	fout.open("File.txt", std::ios_base::app);        //2) Открываем поток:
+	std::ofstream fout;                               //1) Создаём поток для записи в файл:
+	fout.open("File.txt", std::ios_base::app);        //2) Открываем поток чтобы понять куда записать:
 	// std::ios_base::app - append (дописать конец файла) сколько раз открыл файл, столько раз дозаписал HelloWorld;
-	fout <<"Привет сам" << endl; //3) Пишем в поток.
+	fout <<"HelloWorld" << endl; //3) Пишем в поток.
 	time_t now = time(NULL); //Функция time: возвращает текущее календарное время в секундах.
 	//Временной тип данных time_t способен представлять дату и время
 	//и поддерживает арифметические операции. 
@@ -58,9 +58,11 @@ void main()
 		while (!fin.eof())    //NOT EndOfFile
 		{
 			//fin >> buffer; //cin и fin читает строку до пробела
-			fin.getline(buffer, SIZE);//функция getline() читает строку с пробелами 
+			fin.getline(buffer,SIZE);//функция getline() читает строку с пробелами 
 			//до разделителя или до указанного разделителя
 			//по умолчанию разделителем является '\n' возврат каретки
+			//но мы его можем менять  
+			//потомучто функция getline() перегружена;
 			cout << buffer << endl;
 		}
 		fin.close();//Закрываем файл

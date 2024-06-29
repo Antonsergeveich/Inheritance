@@ -78,6 +78,12 @@ public:
 		ofs.width(LAST_NAME_WIDTH);  ofs << left << last_name;
 		ofs.width(FIRST_NAME_WIDTH); ofs << left << first_name;
 		ofs.width(AGE_WIDTH);        ofs << left << age;
+		//Функция width () позволяет задать минимальную ширину поля для вывода значения
+		//При вводе она задает максимальное число читаемых символов. 
+		//Если выводимое значение имеет меньше символов, чем заданная ширина поля,
+		//то оно дополняется символами-заполнителями до заданной ширины (по умолчанию – пробелами). 
+		//Однако если выводимое значение имеет больше символов, чем ширина отведенного ему поля,
+		//то поле будет расширено до нужного размера.
 		return ofs;
 	}
 };
@@ -292,15 +298,17 @@ void Clear(Human* group[], const int n)
 	}
 }
 void Save(Human* group[], const int n, const std::string& falename)
+//функция которая записывает в файл; falename - файл в который будем сохранять массив;
 {
-	std::ofstream fout(falename);
+	std::ofstream fout(falename);//создаём поток
 	for (int i = 0; i < n; i++)
 	{
-		fout << *group[i] << endl;
+		fout << *group[i] << endl; //Записываем в файл содержимое массива group;
 	}
-	fout.close();
+	fout.close(); //закрываем поток;
 	std::string cmd = "notepad " + falename;
-	system(cmd.c_str());  //c_str() возвращает содержимое объекта std::string ввиде обычной C-string (NULL Terminated line)
+	system(cmd.c_str());  // для того чтобы объект класса string преобразовать в строку
+	// вызываем метод c_str(), который возвращает содержимое объекта std::string ввиде обычной C-string (NULL Terminated line)
 }
 
 //#define INHERITANCE_CHECK
