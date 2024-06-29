@@ -47,9 +47,9 @@ void main()
 #endif // WRITE_TO_FILE
 
 #ifdef READ_TO_FILE
-	//1)Создаём и открываем поток:
+	//Создаём и открываем поток:
 	std::ifstream fin("File.txt");
-	if (fin.is_open())
+	if (fin.is_open())//Открываем файл
 	{
 		//Здесь будем читать файл:
 		const int SIZE = 256; //размер буфера
@@ -57,12 +57,13 @@ void main()
 
 		while (!fin.eof())    //NOT EndOfFile
 		{
-			//fin >> buffer;
-			fin.getline(buffer, SIZE);  //Читает строку с пробелами
+			//fin >> buffer; //cin и fin читает строку до пробела
+			fin.getline(buffer, SIZE);//функция getline() читает строку с пробелами 
+			//до разделителя или до указанного разделителя
+			//по умолчанию разделителем является '\n' возврат каретки
 			cout << buffer << endl;
 		}
-
-		fin.close();
+		fin.close();//Закрываем файл
 	}
 	else
 	{
