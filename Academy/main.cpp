@@ -71,7 +71,7 @@ public:
 	{
 		return os << last_name << " " << first_name << " " << age << " y/o";
 	}
-	virtual std::ofstream& info(std::ofstream& ofs)const
+	virtual std::ofstream& write(std::ofstream& ofs)const
 	{
 		//ofs << strchr(typeid(*this).name(), ' ') + 1 << ":\t" << last_name << " " << first_name << " " << age;
 		ofs.width(HUMAN_TYPE_WIDTH); ofs << left << std::string(strchr(typeid(*this).name(), ' ') + 1) + ":";
@@ -86,6 +86,11 @@ public:
 		//то поле будет расширено до нужного размера.
 		return ofs;
 	}
+	virtual std::ifstream& read(std::ifstream& ifs)
+	{
+		ifs >> last_name >> first_name >> age;
+		return ifs;
+	}
 };
 
 std::ostream& operator<<(std::ostream& os, const Human& obj)
@@ -94,7 +99,11 @@ std::ostream& operator<<(std::ostream& os, const Human& obj)
 }
 std::ofstream& operator<<(std::ofstream& ofs, const Human& obj)
 {
-	return obj.info(ofs);
+	return obj.write(ofs);
+}
+std::ifstream& operator>>(std::ifstream& is, Human& obj)
+{
+	return obj.read(is);
 }
 
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
@@ -169,14 +178,19 @@ public:
 		return Human::info(os) << " "
 			<< speciality << " " << group << " " << rating << " " << attendance;
 	}
-	std::ofstream& info(std::ofstream& ofs)const override
+	std::ofstream& write(std::ofstream& ofs)const override
 	{
-		Human::info(ofs);
+		Human::write(ofs);
 		ofs.width(SPECIALITY_WIDTH); ofs << speciality;
 		ofs.width(GROUP_WIDTH);      ofs << group;
 		ofs.width(RATING_WIDTH);     ofs << rating;
 		ofs.width(ATTENDANCE_WIDTH); ofs << attendance;
 		return ofs;
+	}
+	std::ifstream& read(std::ifstream& ifs)override
+	{
+		Human::read(ifs) >> speciality >> group >> rating >> attendance;
+		return ifs; 
 	}
 };
 
@@ -227,12 +241,17 @@ public:
 	{
 		return Human::info(os) << " " << speciality << " " << experience << " years";
 	}
-	std::ofstream& info(std::ofstream& ofs)const override
+	std::ofstream& write(std::ofstream& ofs)const override
 	{
-		Human::info(ofs);
-		ofs.width(SPECIALITY_WIDTH);ofs << speciality;
-		ofs.width(EXPERIENCE_WIDTH);ofs << experience;
+		Human::write(ofs);
+		ofs.width(SPECIALITY_WIDTH); ofs << speciality;
+		ofs.width(EXPERIENCE_WIDTH); ofs << experience;
 		return ofs;
+	}
+	std::ifstream& read(std::ifstream& ifs)override
+	{
+		Human::read(ifs) >> speciality >> experience;
+		return ifs;
 	}
 };
 
@@ -272,11 +291,17 @@ public:
 	{
 		return Student::info(os) << " " << subject;
 	}
-	std::ofstream& info(std::ofstream& ofs)const override
+	std::ofstream& write(std::ofstream& ofs)const override
 	{
-		Student::info(ofs);
+		Student::write(ofs);
 		ofs.width(SUBJECT_WIDTH); ofs << subject;
 		return ofs;
+	}
+	std::ifstream& read(std::ifstream& ifs)override
+	{
+		Student::read(ifs);
+		std::getline(ifs, subject);
+		return ifs;
 	}
 };
 
@@ -310,8 +335,62 @@ void Save(Human* group[], const int n, const std::string& falename)
 	system(cmd.c_str());  // для того чтобы объект класса string преобразовать в строку
 	// вызываем метод c_str(), который возвращает содержимое объекта std::string ввиде обычной C-string (NULL Terminated line)
 }
+Human* HumanFactory(const std::string& type)
+{
+	Human* human = nullptr;
+	if (type == "Human:")human = new Human("", "", 0);
+	if (type == "Student:")human = new Student("", "", 0, "", "", 0, 0);
+	if (type == "Teacher:")human = new Teacher("", "", 0, "", 0);
+	if (type == "Graduate:")human = new Graduate("", "", 0, "", "", 0, 0, "");
+	return human;
+}
+Human** Load(const std::string& filename, int& n)
+{
+	Human** group = nullptr;
+	std::ifstream fin(filename);
+	if (fin.is_open())
+	{
+		//1) Считаем количество объектов, оно точно соответствует количеству непустых строк в файле:
+	    n = 0;
+		while (!fin.eof())
+		{
+			//fin.getline(buffer,SIZE); //for NULL-Terminanated Lines (C-String - char arrays)
+			std::string buffer;
+			std::getline(fin, buffer);
+			if (buffer.size() < 16)continue;
+			n++;
+		}
+		cout << "Количество строк в файле:" << n << endl;
+
+		//2) Выдееляем память под массив:
+		group = new Human* [n] {};
+
+		//3) Возвращаемся в нвчало файла:
+		cout << fin.tellg() << endl;
+		fin.clear();
+		fin.seekg(0);
+		cout << fin.tellg() << endl;
+
+		//4) Выполняем чтение объектов:
+		for (int i = 0; i < n; i++)
+		{
+			std::string type;
+			fin >> type;
+			group[i] = HumanFactory(type);
+			if (group[i])fin >> *group[i];
+			else continue;
+		}
+		fin.close();
+	}
+	else
+	{
+		std::cerr << "Error: File not found" << endl;
+	}
+	return group;
+}
 
 //#define INHERITANCE_CHECK
+//#define POLYMORPHISM
 
 void main()
 {
@@ -327,31 +406,32 @@ void main()
 	teacher.info();
 #endif // INHERITANCE_CHECK
 
+#ifdef POLYMORPHISM
 	/*
-	Polymorphism (Poly - много, Morphis - форма) Многоформенность
-	--------------------
-	AdHoc Polymorphism - Static polymorphism (поскольку отрабатывает на этапе компиляции),
-	это способность объектов вести себя по разному в зависимости от обстоятельств;
-	Реализуется перегрузкой функций и в частности перегрузкой операторов;
-	--------------------
-	Inclusion Polymorphism - Полиморфизм подтипов;
-	это способность объектов  вести себя по разному, в зависимости от того, кем они являются;
-	Realization:
+Polymorphism (Poly - много, Morphis - форма) Многоформенность
+--------------------
+AdHoc Polymorphism - Static polymorphism (поскольку отрабатывает на этапе компиляции),
+это способность объектов вести себя по разному в зависимости от обстоятельств;
+Реализуется перегрузкой функций и в частности перегрузкой операторов;
+--------------------
+Inclusion Polymorphism - Полиморфизм подтипов;
+это способность объектов  вести себя по разному, в зависимости от того, кем они являются;
+Realization:
 
-	1. Base Class Pointer - Generalization (Обобщение) Указатели на базовый класс;
-	The address of the child object can be saved in the pointer to the base class
-	(в указатель на базовый класс можно сохранить адрес дочернего объекта);
-	Upcast (приведение к базовому типу);
-	2. Virtual functions - Specialization (уточнение) единственная возможнасть заглянуть из базового класса в дочерний;
-	DownCast
-	Виртуальным метод - это метод который может быть переопределён
-	в дочернем классе с учётом его полей;
-		VFPTR - Virtual Functions Pointers (Таблица указателей на виртуальные функции)
-		При переопределении виртуальной функции в дочернем классе
-		её обязательно нужно обозначить ключевым словом
-		OVERRIDE;
-	*/
-	//    Generalization
+1. Base Class Pointer - Generalization (Обобщение) Указатели на базовый класс;
+The address of the child object can be saved in the pointer to the base class
+(в указатель на базовый класс можно сохранить адрес дочернего объекта);
+Upcast (приведение к базовому типу);
+2. Virtual functions - Specialization (уточнение) единственная возможнасть заглянуть из базового класса в дочерний;
+DownCast
+Виртуальным метод - это метод который может быть переопределён
+в дочернем классе с учётом его полей;
+	VFPTR - Virtual Functions Pointers (Таблица указателей на виртуальные функции)
+	При переопределении виртуальной функции в дочернем классе
+	её обязательно нужно обозначить ключевым словом
+	OVERRIDE;
+*/
+//    Generalization
 	Human* group[] =
 	{
 		new Student("Pinkman", "Jessie", 22, "Chemistry", "WW_220", 70, 97),
@@ -363,4 +443,11 @@ void main()
 	Print(group, sizeof(group) / sizeof(group[0]));
 	Save(group, sizeof(group) / sizeof(group[0]), "group.txt");
 	Clear(group, sizeof(group) / sizeof(group[0]));
+#endif // POLYMORPHISM
+
+	int n = 0;
+	Human** group = Load("group.txt", n);
+	Print(group, n);
+	Clear(group, n);
+
 }
