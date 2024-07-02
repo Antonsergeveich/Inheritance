@@ -273,8 +273,8 @@ public:
 	std::ifstream& read(std::ifstream& ifs)override
 	{
 		Human::read(ifs);
-		char buffer[SPECIALITY_WIDTH + 1]{};
-		ifs.read(buffer, SPECIALITY_WIDTH);
+		char buffer[SPECIALITY_WIDTH + 1]{}; //создали массив в который будем сохранять размер speciality
+		ifs.read(buffer, SPECIALITY_WIDTH);  //записали в буфер из файла
 		//Функция read в C++ считывает байты из файла в указанную область памяти.
 		speciality = buffer;
 		ifs >> experience;
