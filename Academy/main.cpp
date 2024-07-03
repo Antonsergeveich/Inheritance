@@ -276,6 +276,7 @@ public:
 		char buffer[SPECIALITY_WIDTH + 1]{}; //создали массив в который будем сохранять speciality
 		ifs.read(buffer, SPECIALITY_WIDTH);  //записали в буфер из файла
 	    https://legacy.cplusplus.com/reference/istream/basic_istream/read/
+	    https://learn.microsoft.com/ru-ru/cpp/standard-library/input-stream-member-functions?view=msvc-170
 		//Функция read() в C++ позволяет заносить в указанную область памяти, прочитанные из файла данные
 		//Cчитывает байты из файла в указанную область памяти;
 		speciality = buffer;
