@@ -273,13 +273,13 @@ public:
 	std::ifstream& read(std::ifstream& ifs)override
 	{
 		Human::read(ifs);
-		char speciality[SPECIALITY_WIDTH + 1]{}; //создали массив в который будем сохранять speciality
-		ifs.read(speciality, SPECIALITY_WIDTH);  //записали в speciality данные из файла
+		char buffer[SPECIALITY_WIDTH + 1]{}; //создали массив в который будем сохранять speciality
+		ifs.read(buffer, SPECIALITY_WIDTH);  //записали в buffer данные из файла
 	    //https://legacy.cplusplus.com/reference/istream/basic_istream/read/
 	    //https://learn.microsoft.com/ru-ru/cpp/standard-library/input-stream-member-functions?view=msvc-170
 		//Функция read() в C++ позволяет заносить в указанную область памяти, прочитанные из файла данные
 		//Cчитывает байты из файла в указанную область памяти;
-		this->speciality = speciality;
+		speciality = buffer;
 		ifs >> experience;
 		//Human::read(ifs) >> speciality >> experience;
 		return ifs;
@@ -397,9 +397,9 @@ Human** Load(const std::string& filename, int& n)
 		group = new Human * [n] {};
 
 		//3) Возвращаемся в начало файла:
-		cout << fin.tellg() << endl;
-		fin.clear();
-		fin.seekg(0);
+		cout << fin.tellg() << endl; // возвращает текущую позицию в файле для чтения
+		fin.clear();  //удаляет содержимое строки, которая становится пустой строкой
+		fin.seekg(0); // устанавливает указатель на позицию в файле с которого будет продолжаться чтение
 		cout << fin.tellg() << endl;
 
 		//4) Выполняем чтение объектов:
