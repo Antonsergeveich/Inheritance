@@ -1,13 +1,13 @@
-#include<iostream>
+п»ї#include<iostream>
 using namespace std;
 
 class Animal
 {
 public:
-	virtual void sound() = 0; //чисто виртуальный метод так как в конце " = 0"
+	virtual void sound() = 0; //С‡РёСЃС‚Рѕ РІРёСЂС‚СѓР°Р»СЊРЅС‹Р№ РјРµС‚РѕРґ С‚Р°Рє РєР°Рє РІ РєРѕРЅС†Рµ " = 0"
 };
 class Cat:public Animal{};
-class Tiger :public Cat //конкретный класс, потомучно  в Tiger определено конкретно что будет делать виртуальный метод;
+class Tiger :public Cat //РєРѕРЅРєСЂРµС‚РЅС‹Р№ РєР»Р°СЃСЃ, РїРѕС‚РѕРјСѓС‡РЅРѕ  РІ Tiger РѕРїСЂРµРґРµР»РµРЅРѕ РєРѕРЅРєСЂРµС‚РЅРѕ С‡С‚Рѕ Р±СѓРґРµС‚ РґРµР»Р°С‚СЊ РІРёСЂС‚СѓР°Р»СЊРЅС‹Р№ РјРµС‚РѕРґ;
 {
 public:
 	void sound() override
@@ -15,7 +15,7 @@ public:
 		cout << "RRRRRRRR" << endl;
 	}
 };
-class HomeCat :public Cat //конкретный класс
+class HomeCat :public Cat //РєРѕРЅРєСЂРµС‚РЅС‹Р№ РєР»Р°СЃСЃ
 {
 public:
 	void sound() override
