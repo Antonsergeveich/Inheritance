@@ -111,7 +111,7 @@ std::ifstream& operator>>(std::ifstream& is, Human& obj)
 
 class Student :public Human
 {
-	static const int  SPECIALITY_WIDTH = 25;
+	static const int  SPECIALITY_WIDTH = 32;
 	// static говорит о том, что переменная является единственной для всех экземпляров класса.
 	// const о том, что она не изменяется.
 	// Static — это ключевое слово в C++, 
@@ -212,13 +212,13 @@ public:
 	std::ifstream& read(std::ifstream& ifs)override
 	{
 		Human::read(ifs) >> speciality >> group >> rating >> attendance;
-		return ifs; 
+		return ifs;
 	}
 };
 
 class Teacher : public Human
 {
-	static const int SPECIALITY_WIDTH = 25;
+	static const int SPECIALITY_WIDTH = 33;
 	static const int EXPERIENCE_WIDTH = 5;
 	std::string speciality;
 	unsigned int experience;
@@ -273,9 +273,11 @@ public:
 	std::ifstream& read(std::ifstream& ifs)override
 	{
 		Human::read(ifs);
-		char buffer[SPECIALITY_WIDTH + 1]{}; //создали массив в который будем сохранять размер speciality
+		char buffer[SPECIALITY_WIDTH + 1]{}; //создали массив в который будем сохранять speciality
 		ifs.read(buffer, SPECIALITY_WIDTH);  //записали в буфер из файла
-		//Функция read в C++ считывает байты из файла в указанную область памяти.
+	    https://legacy.cplusplus.com/reference/istream/basic_istream/read/
+		//Функция read() в C++ позволяет заносить в указанную область памяти, прочитанные из файла данные
+		//Cчитывает байты из файла в указанную область памяти;
 		speciality = buffer;
 		ifs >> experience;
 		//Human::read(ifs) >> speciality >> experience;
@@ -379,7 +381,7 @@ Human** Load(const std::string& filename, int& n)
 	if (fin.is_open())
 	{
 		//1) Считаем количество объектов, оно точно соответствует количеству непустых строк в файле:
-	    n = 0;
+		n = 0;
 		while (!fin.eof())
 		{
 			//fin.getline(buffer,SIZE); //for NULL-Terminanated Lines (C-String - char arrays)
@@ -391,7 +393,7 @@ Human** Load(const std::string& filename, int& n)
 		cout << "Количество строк в файле:" << n << endl;
 
 		//2) Выдееляем память под массив:
-		group = new Human* [n] {};
+		group = new Human * [n] {};
 
 		//3) Возвращаемся в начало файла:
 		cout << fin.tellg() << endl;
@@ -467,7 +469,7 @@ DownCast
 		new Teacher("White", "Walter", 50, "Chemistry", 25),
 		new Graduate("Schreder","Hank",40,"Criminalisttic","OBN", 80,90, "How to catch Heisenberg"),
 		new Student("Vercetty", "Tommy", 30, "Theft", "Vice", 97, 98),
-		new Teacher("Diaz","Ricardo", 50, "Weapons distribution", 20)
+		new Teacher("Diaz","Ricardo", 50, "Weapons and drugs distribution", 20)
 	};
 	Print(group, sizeof(group) / sizeof(group[0]));
 	Save(group, sizeof(group) / sizeof(group[0]), "group.txt");
