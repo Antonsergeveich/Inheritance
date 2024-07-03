@@ -211,7 +211,13 @@ public:
 	}
 	std::ifstream& read(std::ifstream& ifs)override
 	{
-		Human::read(ifs) >> speciality >> group >> rating >> attendance;
+		Human::read(ifs);
+		char buffer[SPECIALITY_WIDTH]{};
+		ifs.read(buffer, SPECIALITY_WIDTH);
+		for (int i = SPECIALITY_WIDTH - 1; buffer[i] == ' '; i--)buffer[i] = 0;
+		while (buffer[0] == ' ')for (int i = 0; buffer[i]; i++)buffer[i] = buffer[i + 1];
+		this->speciality = buffer;
+		ifs >> group >> rating >> attendance;
 		return ifs;
 	}
 };
@@ -273,13 +279,21 @@ public:
 	std::ifstream& read(std::ifstream& ifs)override
 	{
 		Human::read(ifs);
-		char buffer[SPECIALITY_WIDTH + 1]{}; //создали массив в который будем сохранять speciality
-		ifs.read(buffer, SPECIALITY_WIDTH);  //записали в buffer данные из файла
+		const int SIZE = SPECIALITY_WIDTH;
+		char buffer[SIZE + 1]{}; //создали массив в который будем сохранять speciality
+		ifs.read(buffer, SIZE);  //записали в buffer данные из файла
 	    //https://legacy.cplusplus.com/reference/istream/basic_istream/read/
 	    //https://learn.microsoft.com/ru-ru/cpp/standard-library/input-stream-member-functions?view=msvc-170
 		//Функция read() в C++ позволяет заносить в указанную область памяти, прочитанные из файла данные
 		//Cчитывает байты из файла в указанную область памяти;
-		speciality = buffer;
+		int pos = strrchr(buffer, ' ') - buffer; //String reverse character (последнее вхождение в указанной строке)
+		//buffer[pos] = 0;
+		for (int i = SIZE - 1; buffer[i] == ' '; i--)buffer[i] = 0; //char this int
+		while (buffer[0] == ' ') 
+		{
+			for (int i = 0; buffer[i]; i++)buffer[i] = buffer[i + 1];
+		}
+		this->speciality = buffer;
 		ifs >> experience;
 		//Human::read(ifs) >> speciality >> experience;
 		return ifs;
