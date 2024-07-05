@@ -74,6 +74,7 @@ public:
 	virtual std::ofstream& write(std::ofstream& ofs)const
 	{
 		//ofs << strchr(typeid(*this).name(), ' ') + 1 << ":\t" << last_name << " " << first_name << " " << age;
+		//Функция strchr () обнаруживает первое вхождение заданного символа в заданной строке. Она имеет следующий прототип: char* strchr (const char* str, int ch); Функция strchr () выполняет поиск в строке str слева направо, пока не найдет символ ch или пока строка не закончится нулевым символом. Если символ ch найден, функция возвращает указатель на него,а в противном случае — NULL.
 		ofs.width(HUMAN_TYPE_WIDTH); ofs << left << std::string(strchr(typeid(*this).name(), ' ') + 1) + ":";
 		ofs.width(LAST_NAME_WIDTH);  ofs << left << last_name;
 		ofs.width(FIRST_NAME_WIDTH); ofs << left << first_name;
