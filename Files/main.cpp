@@ -15,7 +15,7 @@ void main()
 {
 	setlocale(LC_ALL, "");
 
-#ifdef WRITE_TO_FILE
+#ifdef WRITE_TO_FILE //пишем в файл
 	std::ofstream fout;                               //1) Создаём поток для записи в файл:
 	fout.open("File.txt", std::ios_base::app);        //2) Открываем поток чтобы понять куда записать:
 	// std::ios_base::app - append (дописать конец файла) сколько раз открыл файл, столько раз дозаписал HelloWorld;
@@ -46,7 +46,7 @@ void main()
 
 #endif // WRITE_TO_FILE
 
-#ifdef READ_TO_FILE
+#ifdef READ_TO_FILE //читаем из файла
 	//Создаём и открываем поток:
 	std::ifstream fin("File.txt");
 	if (fin.is_open())//Открываем файл
