@@ -1,6 +1,8 @@
-﻿#include<windows.h>
+﻿#define	 _USE_MATH_DEFINES
+#include<windows.h>
 #include<iostream>
 using namespace std;
+
 
 namespace Geometry
 {
@@ -10,6 +12,7 @@ namespace Geometry
 		DARK_RED = 0x00000077,
 		GREEN    = 0x0000FF00,
 		BLUE     = 0x00FF0000,
+		YELLOW   = 0x0000FFFF,
 
 		CONSOLE_BLUE = 0x99,
 		CONSOLE_GREEN = 0xAA,
@@ -227,6 +230,10 @@ namespace Geometry
 		{
 			return radius;
 		}
+		double get_diameter()const
+		{
+			return 2 * radius;
+		}
 		void set_radius(double radius)
 		{
 			this->radius = radius;
@@ -236,6 +243,30 @@ namespace Geometry
 			set_radius(radius);
 		}
 		~Circle() {}
+		double get_area()const override
+		{
+			return M_PI * radius*radius;
+		}
+		double get_perimeter()const override
+		{
+			return M_PI * get_diameter();
+		}
+		void draw()const override
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+
+			DeleteObject(hBrush);
+			DeleteObject(hPen);
+
+			ReleaseDC(hwnd, hdc);
+		}
 	};
 }
 
@@ -252,5 +283,6 @@ void main()
 	Geometry::Rectangle rect(150, 80, 500, 50, 3, Geometry:: Color::BLUE);
 	rect.info();
 
-	
+	Geometry::Circle circle(75, 700, 50, 5, Geometry::Color::YELLOW);
+	circle.info();
 }
