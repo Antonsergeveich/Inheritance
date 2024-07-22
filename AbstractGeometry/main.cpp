@@ -1,10 +1,10 @@
-#include<windows.h>
+п»ї#include<windows.h>
 #include<iostream>
 using namespace std;
 
 namespace Geometry
 {
-	enum Color //enum (Enumeration) - это перечисление. Перечисление - набор целочисленных констант.
+	enum Color //enum (Enumeration) - СЌС‚Рѕ РїРµСЂРµС‡РёСЃР»РµРЅРёРµ. РџРµСЂРµС‡РёСЃР»РµРЅРёРµ - РЅР°Р±РѕСЂ С†РµР»РѕС‡РёСЃР»РµРЅРЅС‹С… РєРѕРЅСЃС‚Р°РЅС‚.
 	{
 		CONSOLE_BLUE = 0x09,
 		CONSOLE_GREEN = 0xAA,
@@ -31,8 +31,8 @@ namespace Geometry
 		}
 		virtual void info()const
 		{
-			cout << "Площадь фигуры: " << get_area() << endl;
-			cout << "Периметр фигуры:" << get_perimeter() << endl;
+			cout << "РџР»РѕС‰Р°РґСЊ С„РёРіСѓСЂС‹: " << get_area() << endl;
+			cout << "РџРµСЂРёРјРµС‚СЂ С„РёРіСѓСЂС‹:" << get_perimeter() << endl;
 			draw();
 		}
 	};
@@ -79,7 +79,7 @@ namespace Geometry
 		void info()const override
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Длина стороны: " << side << endl;
+			cout << "Р”Р»РёРЅР° СЃС‚РѕСЂРѕРЅС‹: " << side << endl;
 			Shape::info();
 		}
 	};
@@ -106,26 +106,26 @@ namespace Geometry
 		void draw()const override
 		{
 			HWND hwnd = GetConsoleWindow(); 
-			//1)Возвращает дискриптор окна консоли. 
-			//description - переменная в которой хранится описание чего-то;
-			//HWND - Handler to Window (обработчик (Дискриптор) окна)
+			//1)Р’РѕР·РІСЂР°С‰Р°РµС‚ РґРёСЃРєСЂРёРїС‚РѕСЂ РѕРєРЅР° РєРѕРЅСЃРѕР»Рё. 
+			//description - РїРµСЂРµРјРµРЅРЅР°СЏ РІ РєРѕС‚РѕСЂРѕР№ С…СЂР°РЅРёС‚СЃСЏ РѕРїРёСЃР°РЅРёРµ С‡РµРіРѕ-С‚Рѕ;
+			//HWND - Handler to Window (РѕР±СЂР°Р±РѕС‚С‡РёРє (Р”РёСЃРєСЂРёРїС‚РѕСЂ) РѕРєРЅР°)
 			HDC hdc = GetDC(hwnd);
-			//2) Получаем контекст устройства (Device Context) окна консоли.
-			// DC - это то, на чём будем рисовать
+			//2) РџРѕР»СѓС‡Р°РµРј РєРѕРЅС‚РµРєСЃС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР° (Device Context) РѕРєРЅР° РєРѕРЅСЃРѕР»Рё.
+			// DC - СЌС‚Рѕ С‚Рѕ, РЅР° С‡С‘Рј Р±СѓРґРµРј СЂРёСЃРѕРІР°С‚СЊ
 			HPEN hPen = CreatePen(PS_SOLID, 5, get_color());
-			//3) Создаём карандаш. pen рисует контур фигуры.
-			// PS_SOLID - сплошная линия
-			// 5 - толщина линии в пикселах
+			//3) РЎРѕР·РґР°С‘Рј РєР°СЂР°РЅРґР°С€. pen СЂРёСЃСѓРµС‚ РєРѕРЅС‚СѓСЂ С„РёРіСѓСЂС‹.
+			// PS_SOLID - СЃРїР»РѕС€РЅР°СЏ Р»РёРЅРёСЏ
+			// 5 - С‚РѕР»С‰РёРЅР° Р»РёРЅРёРё РІ РїРёРєСЃРµР»Р°С…
 			HBRUSH hBrush = CreateSolidBrush(get_color());
 
-			// 5) Выбираем чем и на чём рисовать:
+			// 5) Р’С‹Р±РёСЂР°РµРј С‡РµРј Рё РЅР° С‡С‘Рј СЂРёСЃРѕРІР°С‚СЊ:
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
-			// 6) Рисуем прямоугольник:
+			// 6) Р РёСЃСѓРµРј РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє:
 			::Rectangle(hdc, 400, 50, 800, 350); 
-			//Двойное двоеточие :: без операнда слева означает что класс Rectangle берётся из глобального пространства имён;
-			// 7)Освобождаем ресурсы:
+			//Р”РІРѕР№РЅРѕРµ РґРІРѕРµС‚РѕС‡РёРµ :: Р±РµР· РѕРїРµСЂР°РЅРґР° СЃР»РµРІР° РѕР·РЅР°С‡Р°РµС‚ С‡С‚Рѕ РєР»Р°СЃСЃ Rectangle Р±РµСЂС‘С‚СЃСЏ РёР· РіР»РѕР±Р°Р»СЊРЅРѕРіРѕ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР° РёРјС‘РЅ;
+			// 7)РћСЃРІРѕР±РѕР¶РґР°РµРј СЂРµСЃСѓСЂСЃС‹:
 			DeleteObject(hPen);
 			DeleteObject(hBrush);
 
@@ -158,8 +158,8 @@ namespace Geometry
 		void info()const override
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Ширина: " << get_width() << endl;
-			cout << "Высота: " << get_height() << endl;
+			cout << "РЁРёСЂРёРЅР°: " << get_width() << endl;
+			cout << "Р’С‹СЃРѕС‚Р°: " << get_height() << endl;
 			Shape::info();
 		}
 	};
@@ -170,9 +170,9 @@ void main()
 	setlocale(LC_ALL, "");
 	//Square shape(Color::CONSOLE_BLUE);
 	Geometry::Square square(5, Geometry::Color::CONSOLE_RED);
-	/*cout << "Длина стороны квадрата: " << square.get_side() << endl;
-	cout << "Площадь квадрата: " << square.get_area() << endl;
-	cout << "Периметр квадрата: " << square.get_perimeter() << endl;*/
+	/*cout << "Р”Р»РёРЅР° СЃС‚РѕСЂРѕРЅС‹ РєРІР°РґСЂР°С‚Р°: " << square.get_side() << endl;
+	cout << "РџР»РѕС‰Р°РґСЊ РєРІР°РґСЂР°С‚Р°: " << square.get_area() << endl;
+	cout << "РџРµСЂРёРјРµС‚СЂ РєРІР°РґСЂР°С‚Р°: " << square.get_perimeter() << endl;*/
 	square.info();
 
 	Geometry::Rectangle rect(15, 8, Geometry:: Color::CONSOLE_RED);
