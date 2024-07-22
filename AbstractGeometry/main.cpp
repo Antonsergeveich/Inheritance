@@ -113,6 +113,7 @@ namespace Geometry
 			draw();//Метод draw() рисует объекты в графическом окне
 		}
 	};
+	int Shape::count = 0;
 
 	/*class Square : public Shape
 	{
