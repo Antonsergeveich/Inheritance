@@ -6,7 +6,11 @@ namespace Geometry
 {
 	enum Color //enum (Enumeration) - это перечисление. Перечисление - набор целочисленных констант.
 	{
-		CONSOLE_BLUE = 0x09,
+		RED    = 0x000000FF,
+		GREEN  = 0x0000FF00,
+		BLUE   = 0x00FF0000,
+
+		CONSOLE_BLUE = 0x99,
 		CONSOLE_GREEN = 0xAA,
 		CONSOLE_RED = 0xCC,
 		CONSOLE_DEFAULT = 0x07
@@ -219,13 +223,13 @@ void main()
 {
 	setlocale(LC_ALL, "");
 	//Square shape(Color::CONSOLE_BLUE);
-	Geometry::Square square(5, 300, 50, 5, Geometry:: Color::CONSOLE_BLUE);
+	Geometry::Square square(5, 300, 50, 5, Geometry:: Color::BLUE);
 	/*cout << "Длина стороны квадрата: " << square.get_side() << endl;
 	cout << "Площадь квадрата: " << square.get_area() << endl;
 	cout << "Периметр квадрата: " << square.get_perimeter() << endl;*/
 	square.info();
 
-	Geometry::Rectangle rect(150, 80, 500, 50, 3, Geometry:: Color::CONSOLE_BLUE);
+	Geometry::Rectangle rect(150, 80, 500, 50, 3, Geometry:: Color::BLUE);
 	rect.info();
 
 	
