@@ -14,7 +14,16 @@ namespace Geometry
 
 	class Shape
 	{
+	protected: 
+		//Защищённые поля, доступны только внутри класса, и внутри его дочерних классов.
 		Color color;
+		//Координаты, по которым будет выводится фигура:
+		unsigned int start_x;
+		unsigned int start_y;
+		//В любой графической оболочке координаты задаются в пикселях(точка на экране)
+		//Начало координат всегда находится в левом верхнем углу.
+		unsigned int line_width;  
+		//толщина линии, которой будет рисоваться контур фигуры.
 	public:
 		Shape(Color color) :color(color) {}
 		virtual ~Shape() {}
@@ -29,15 +38,27 @@ namespace Geometry
 		{
 			this->color = color;
 		}
+		unsigned int get_start_x()const
+		{
+			return start_x;
+		}
+		unsigned int get_start_y()const
+		{
+			return start_y;
+		}
+		unsigned int get_line_width()const
+		{
+			return line_width;
+		}
 		virtual void info()const
 		{
 			cout << "Площадь фигуры: " << get_area() << endl;
 			cout << "Периметр фигуры:" << get_perimeter() << endl;
-			draw();
+			draw();//Метод draw() рисует объекты в графическом окне
 		}
 	};
 
-	class Square : public Shape
+	/*class Square : public Shape
 	{
 		double side;
 	public:
@@ -82,7 +103,7 @@ namespace Geometry
 			cout << "Длина стороны: " << side << endl;
 			Shape::info();
 		}
-	};
+	};*/
 
 	class Rectangle :public Shape
 	{
@@ -163,6 +184,12 @@ namespace Geometry
 			Shape::info();
 		}
 	};
+
+	class Square :public Rectangle
+	{
+	public:
+		Square(double side, Color color) :Rectangle(side, side, color){}
+	};
 }
 
 void main()
@@ -177,4 +204,6 @@ void main()
 
 	Geometry::Rectangle rect(15, 8, Geometry:: Color::CONSOLE_RED);
 	rect.info();
+
+	
 }
