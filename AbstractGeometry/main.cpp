@@ -6,9 +6,10 @@ namespace Geometry
 {
 	enum Color //enum (Enumeration) - это перечисление. Перечисление - набор целочисленных констант.
 	{
-		RED    = 0x000000FF,
-		GREEN  = 0x0000FF00,
-		BLUE   = 0x00FF0000,
+		RED      = 0x000000FF,
+		DARK_RED = 0x00000077,
+		GREEN    = 0x0000FF00,
+		BLUE     = 0x00FF0000,
 
 		CONSOLE_BLUE = 0x99,
 		CONSOLE_GREEN = 0xAA,
@@ -216,6 +217,25 @@ namespace Geometry
 	public:
 		Square(double side, SHAPE_TAKE_PARAMETERS) :Rectangle(side, side, SHAPE_GIVE_PARAMETERS){}
 		~Square() {}
+	};
+
+	class Circle :public Shape
+	{
+		double radius;
+	public:
+		double get_radius()const
+		{
+			return radius;
+		}
+		void set_radius(double radius)
+		{
+			this->radius = radius;
+		}
+		Circle(double radius, SHAPE_TAKE_PARAMETERS) :Shape(SHAPE_GIVE_PARAMETERS)
+		{
+			set_radius(radius);
+		}
+		~Circle() {}
 	};
 }
 
