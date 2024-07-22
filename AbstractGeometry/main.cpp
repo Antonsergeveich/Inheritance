@@ -262,6 +262,8 @@ namespace Geometry
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
+			::Ellipse(hdc, start_x, start_y, start_x + get_diameter(), start_y + get_diameter());
+
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
 
