@@ -15,7 +15,7 @@ namespace Geometry
 	class Shape
 	{
 	protected: 
-		//Защищённые поля, доступны только внутри класса, и внутри его дочерних классов.
+		//Защищённые поля, доступны только внутри класса, и внутри его дочерних классов. Благодаря protected: к этим полям можно будет обращаться напрямую в дочерних классах без get set методов
 		Color color;
 		//Координаты, по которым будет выводится фигура:
 		unsigned int start_x;
@@ -49,6 +49,18 @@ namespace Geometry
 		unsigned int get_line_width()const
 		{
 			return line_width;
+		}
+		void set_start_x(unsigned int start_x)
+		{
+			this->start_x = start_x;
+		}
+		void set_start_y(unsigned int start_y)
+		{
+			this->start_y = start_y;
+		}
+		void set_line_width(unsigned int line_width)
+		{
+			this->line_width = line_width;
 		}
 		virtual void info()const
 		{
