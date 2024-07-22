@@ -105,14 +105,39 @@ namespace Geometry
 		}
 		void draw()const override
 		{
-			for (int i = 0; i < height; i++)
+			HWND hwnd = GetConsoleWindow(); 
+			//1)Возвращает дискриптор окна консоли. 
+			//description - переменная в которой хранится описание чего-то;
+			//HWND - Handler to Window (обработчик (Дискриптор) окна)
+			HDC hdc = GetDC(hwnd);
+			//2) Получаем контекст устройства (Device Context) окна консоли.
+			// DC - это то, на чём будем рисовать
+			HPEN hPen = CreatePen(PS_SOLID, 5, get_color());
+			//3) Создаём карандаш. pen рисует контур фигуры.
+			// PS_SOLID - сплошная линия
+			// 5 - толщина линии в пикселах
+			HBRUSH hBrush = CreateSolidBrush(get_color());
+
+			// 5) Выбираем чем и на чём рисовать:
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+
+			// 6) Рисуем прямоугольник:
+			::Rectangle(hdc, 400, 50, 800, 350); 
+			//Двойное двоеточие :: без операнда слева означает что класс Rectangle берётся из глобального пространства имён;
+			// 7)Освобождаем ресурсы:
+			DeleteObject(hPen);
+			DeleteObject(hBrush);
+
+			ReleaseDC(hwnd, hdc);
+			/*for (int i = 0; i < height; i++)
 			{
 				for (int j = 0; j < width; j++)
 				{
 					cout << "* ";
 				}
 				cout << endl;
-			}
+			}*/
 		}
 		double get_width()const
 		{
