@@ -12,6 +12,8 @@ namespace Geometry
 		CONSOLE_DEFAULT = 0x07
 	};
 
+#define SHAPE_TAKE_PARAMETERS unsigned int start_x, unsigned int start_y, unsigned int line_width, Color color
+#define SHAPE_GIVE_PARAMETERS  start_x, start_y, line_width, color
 	class Shape
 	{
 	protected: 
@@ -25,7 +27,12 @@ namespace Geometry
 		unsigned int line_width;  
 		//толщина линии, которой будет рисоваться контур фигуры.
 	public:
-		Shape(Color color) :color(color) {}
+		Shape(SHAPE_TAKE_PARAMETERS) :color(color) 
+		{
+			set_start_x(start_x);
+			set_start_y(start_y);
+			set_line_width(line_width);
+		}
 		virtual ~Shape() {}
 		virtual double get_area()const = 0;
 		virtual double get_perimeter()const = 0;
@@ -122,7 +129,7 @@ namespace Geometry
 		double width;
 		double height;
 	public:
-		Rectangle(double width, double height, Color color) :Shape(color)
+		Rectangle(double width, double height, SHAPE_TAKE_PARAMETERS) :Shape(SHAPE_GIVE_PARAMETERS)
 		{
 			set_width(width);
 			set_height(height);
@@ -156,7 +163,10 @@ namespace Geometry
 			SelectObject(hdc, hBrush);
 
 			// 6) Рисуем прямоугольник:
-			::Rectangle(hdc, 400, 50, 800, 350); 
+			::Rectangle(hdc, start_x, start_y, /*start_x + width*/800,/*start_y + height*/ 350); 
+			//start_x, start_y - координаты верхнего левого угла
+			//800,350 - координаты нижнего правого угла.
+
 			//Двойное двоеточие :: без операнда слева означает что класс Rectangle берётся из глобального пространства имён;
 			// 7)Освобождаем ресурсы:
 			DeleteObject(hPen);
@@ -200,7 +210,8 @@ namespace Geometry
 	class Square :public Rectangle
 	{
 	public:
-		Square(double side, Color color) :Rectangle(side, side, color){}
+		Square(double side, SHAPE_TAKE_PARAMETERS) :Rectangle(side, side, SHAPE_GIVE_PARAMETERS){}
+		~Square() {}
 	};
 }
 
@@ -208,13 +219,13 @@ void main()
 {
 	setlocale(LC_ALL, "");
 	//Square shape(Color::CONSOLE_BLUE);
-	Geometry::Square square(5, Geometry::Color::CONSOLE_RED);
+	Geometry::Square square(5, 300, 50, 5, Geometry:: Color::CONSOLE_BLUE);
 	/*cout << "Длина стороны квадрата: " << square.get_side() << endl;
 	cout << "Площадь квадрата: " << square.get_area() << endl;
 	cout << "Периметр квадрата: " << square.get_perimeter() << endl;*/
 	square.info();
 
-	Geometry::Rectangle rect(15, 8, Geometry:: Color::CONSOLE_RED);
+	Geometry::Rectangle rect(150, 80, 500, 50, 3, Geometry:: Color::CONSOLE_BLUE);
 	rect.info();
 
 	
