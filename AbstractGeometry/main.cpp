@@ -5,7 +5,7 @@
 using namespace std;
 
 
-namespace Geometry
+namespace Geometry // объявляем пространство имён Geometry для того чтобы не вызывался класс Rectangle с библиотеки windows.h
 {
 	enum Color //enum (Enumeration) - это перечисление. Перечисление - набор целочисленных констант.
 	{
@@ -53,6 +53,7 @@ namespace Geometry
 			set_line_width(line_width);
 			count++;
 		}
+		
 		virtual ~Shape() 
 		{
 			count--;
@@ -118,11 +119,11 @@ namespace Geometry
 	};
 	int Shape::count = 0;
 
-	/*class Square : public Shape
+	class Square : public Shape
 	{
 		double side;
 	public:
-		Square(double side, Color color) :Shape(color)
+		Square(double side, Color color) :Shape (color)
 		{
 			set_side(side);
 		}
@@ -163,7 +164,7 @@ namespace Geometry
 			cout << "Длина стороны: " << side << endl;
 			Shape::info();
 		}
-	};*/
+	};
 
 	class Rectangle :public Shape
 	{
