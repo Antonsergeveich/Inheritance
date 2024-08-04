@@ -1,4 +1,4 @@
-﻿#define    _USE_MATH_DEFINES
+﻿#define    _USE_MATH_DEFINES // чтобы на M_PI не выдавал ошибку
 
 #include<windows.h>
 #include<iostream>
@@ -23,7 +23,7 @@ namespace Geometry // объявляем пространство имён Geome
 
 #define SHAPE_TAKE_PARAMETERS unsigned int start_x, unsigned int start_y, unsigned int line_width, Color color
 #define SHAPE_GIVE_PARAMETERS  start_x, start_y, line_width, color
-	class Shape
+	class Shape //Shape(Форма) - абстрактный класс с чисто виртуальными методами
 	{
 	protected: 
 		//Защищённые поля, доступны только внутри класса, и внутри его дочерних классов. Благодаря protected: к этим полям можно будет обращаться напрямую в дочерних классах без get set методов
@@ -119,54 +119,54 @@ namespace Geometry // объявляем пространство имён Geome
 	};
 	int Shape::count = 0;
 
-	class Square : public Shape
-	{
-		double side;
-	public:
-		Square(double side, Color color) :Shape (color)
-		{
-			set_side(side);
-		}
-		virtual ~Square() {}
-		double get_area()const override
-		{
-			return side * side;
-		}
-		double get_perimeter()const override
-		{
-			return side * 4;
-		}
-		void draw()const override
-		{
-			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-			SetConsoleTextAttribute(hConsole, get_color());
-			for (int i = 0; i < side; i++)
-			{
-				for (int i = 0; i < side; i++)
-				{
-					cout << "* ";
-				}
-				cout << endl;
-			}
-			SetConsoleTextAttribute(hConsole, Color::CONSOLE_DEFAULT);
-		}
-		double get_side()const
-		{
-			return side;
-		}
-		void set_side(double side)
-		{
-			this->side = side;
-		}
-		void info()const override
-		{
-			cout << typeid(*this).name() << endl;
-			cout << "Длина стороны: " << side << endl;
-			Shape::info();
-		}
-	};
+	//class Square : public Shape // Square(Квадрат) - конкретный класс т.к. в нём опредеелены чисто виртуальные методы
+	//{
+	//	double side;
+	//public:
+	//	Square(double side, Color color) :Shape (color)
+	//	{
+	//		set_side(side);
+	//	}
+	//	virtual ~Square() {}
+	//	double get_area()const override
+	//	{
+	//		return side * side;
+	//	}
+	//	double get_perimeter()const override
+	//	{
+	//		return side * 4;
+	//	}
+	//	void draw()const override
+	//	{
+	//		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	//		SetConsoleTextAttribute(hConsole, get_color());
+	//		for (int i = 0; i < side; i++)
+	//		{
+	//			for (int i = 0; i < side; i++)
+	//			{
+	//				cout << "* ";
+	//			}
+	//			cout << endl;
+	//		}
+	//		SetConsoleTextAttribute(hConsole, Color::CONSOLE_DEFAULT);
+	//	}
+	//	double get_side()const
+	//	{
+	//		return side;
+	//	}
+	//	void set_side(double side)
+	//	{
+	//		this->side = side;
+	//	}
+	//	void info()const override
+	//	{
+	//		cout << typeid(*this).name() << endl;
+	//		cout << "Длина стороны: " << side << endl;
+	//		Shape::info();
+	//	}
+	//};
 
-	class Rectangle :public Shape
+	class Rectangle :public Shape //прямоугольник
 	{
 		double width;
 		double height;
@@ -249,14 +249,14 @@ namespace Geometry // объявляем пространство имён Geome
 		}
 	};
 
-	class Square :public Rectangle
+	/*class Square :public Rectangle
 	{
 	public:
 		Square(double side, SHAPE_TAKE_PARAMETERS) :Rectangle(side, side, SHAPE_GIVE_PARAMETERS){}
 		~Square() {}
-	};
+	};*/
 
-	class Circle :public Shape
+	class Circle :public Shape //Круг 
 	{
 		double radius;
 	public:
@@ -310,7 +310,7 @@ namespace Geometry // объявляем пространство имён Geome
 		}
 	};
 	
-	class Triangle :public Shape
+	class Triangle :public Shape //Треугольник
 	{
 	public:
 		virtual double get_height()const = 0;
@@ -349,7 +349,7 @@ namespace Geometry // объявляем пространство имён Geome
 		void draw()const override
 		{
 			HWND hwnd = /*GetConsoleWindow()*/FindWindow(NULL, "Inheritance - Microsoft Visual Studio");// L чтобы подхватывать строку в unicod,
-			//или project-propertice-All Configurations, All Platforms-Advanced-Character Set(Use Multi-Byte Character Set)
+			//или в меню VS выбрать project-propertice-All Configurations, All Platforms-Advanced-Character Set(Use Multi-Byte Character Set)
 			HDC hdc = GetDC(hwnd);
 
 			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
@@ -392,7 +392,8 @@ void main()
 {
 	setlocale(LC_ALL, "");
 	//Square shape(Color::CONSOLE_BLUE);
-	//Geometry::Square square(50, 300, 50, 5, Geometry:: Color::BLUE);
+	//Geometry::Square square(8);
+	//Geometry::Square square(10, 300, 50, 5, Geometry:: Color::BLUE);
 	/*cout << "Длина стороны квадрата: " << square.get_side() << endl;
 	cout << "Площадь квадрата: " << square.get_area() << endl;
 	cout << "Периметр квадрата: " << square.get_perimeter() << endl;
@@ -405,15 +406,15 @@ void main()
 	/*Geometry::Circle circle(75, 700, 50, 5, Geometry::Color::YELLOW);
 	circle.info();*/
 
-	/*Geometry::Rectangle rect{ 150, 80, 500, 50, 3, Geometry::Color::DARK_RED };
+	/*Geometry::Rectangle rect{ 150, 80, 500, 50, 3, Geometry::Color::GREEN};
 	rect.info();*/
 
-	Geometry::Circle circle(1, 500, 100, 2, Geometry::Color::YELLOW);
-	circle.info();
+	/*Geometry::Circle circle(1, 500, 100, 2, Geometry::Color::RED);
+	circle.info();*/
 
-	Geometry::EquilateralTriangle e_triangle(5, 200, 300, 150, Geometry::Color::GREEN);
+	Geometry::EquilateralTriangle e_triangle(5, 200, 300, 150, Geometry::Color::RED);
 	e_triangle.info();
 
-	cout << "Количество фигур: " << e_triangle.get_count() << endl;
-	cout << "Количество фигур: " << Geometry::Shape::get_count() << endl;
+	/*cout << "Количество фигур: " << e_triangle.get_count() << endl;
+	cout << "Количество фигур: " << Geometry::Shape::get_count() << endl;*/
 }
