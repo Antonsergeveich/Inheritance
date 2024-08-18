@@ -197,6 +197,7 @@ namespace Geometry // объявляем пространство имён Geome
 			// DC - это то, на чём будем рисовать
 			HPEN hPen = CreatePen(PS_SOLID, 5, get_color());
 			//https://learn.microsoft.com/ru-ru/windows/win32/gdi/colorref
+			// в 16 цветов можно окрасить один пиксель, один пиксель - 4 бита;
 			//3) Создаём карандаш. pen рисует контур фигуры.
 			// PS_SOLID - сплошная линия
 			// 5 - толщина линии в пикселах
