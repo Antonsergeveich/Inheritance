@@ -53,7 +53,6 @@ namespace Geometry // объявляем пространство имён Geome
 			set_line_width(line_width);
 			count++;
 		}
-		
 		virtual ~Shape() 
 		{
 			count--;
@@ -123,11 +122,12 @@ namespace Geometry // объявляем пространство имён Geome
 	//{
 	//	double side;
 	//public:
-	//	Square(double side, Color color) :Shape (color)
+	//	Square(double side, Color color) : Shape (SHAPE_GIVE_PARAMETERS)	
 	//	{
 	//		set_side(side);
 	//	}
 	//	virtual ~Square() {}
+	//	
 	//	double get_area()const override
 	//	{
 	//		return side * side;
@@ -249,12 +249,12 @@ namespace Geometry // объявляем пространство имён Geome
 		}
 	};
 
-	/*class Square :public Rectangle
+	class Square :public Rectangle
 	{
 	public:
 		Square(double side, SHAPE_TAKE_PARAMETERS) :Rectangle(side, side, SHAPE_GIVE_PARAMETERS){}
 		~Square() {}
-	};*/
+	};
 
 	class Circle :public Shape //Круг 
 	{
@@ -392,13 +392,13 @@ void main()
 {
 	setlocale(LC_ALL, "");
 	//Square shape(Color::CONSOLE_BLUE);
-	//Geometry::Square square(8);
-	//Geometry::Square square(10, 300, 50, 5, Geometry:: Color::BLUE);
+	//Geometry::Square square(5, Geometry::CONSOLE_RED);
+	Geometry::Square square(10, 300, 50, 5, Geometry::Color::BLUE);
 	/*cout << "Длина стороны квадрата: " << square.get_side() << endl;
 	cout << "Площадь квадрата: " << square.get_area() << endl;
 	cout << "Периметр квадрата: " << square.get_perimeter() << endl;
 	square.draw();*/
-	//square.info();
+	square.info();
 
 	/*Geometry::Rectangle rect(150, 80, 500, 50, 3, Geometry:: Color::BLUE);
 	rect.info();*/
@@ -412,8 +412,8 @@ void main()
 	/*Geometry::Circle circle(1, 500, 100, 2, Geometry::Color::RED);
 	circle.info();*/
 
-	Geometry::EquilateralTriangle e_triangle(5, 200, 300, 150, Geometry::Color::RED);
-	e_triangle.info();
+	/*Geometry::EquilateralTriangle e_triangle(5, 200, 300, 150, Geometry::Color::RED);
+	e_triangle.info();*/
 
 	/*cout << "Количество фигур: " << e_triangle.get_count() << endl;
 	cout << "Количество фигур: " << Geometry::Shape::get_count() << endl;*/
