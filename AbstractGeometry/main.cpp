@@ -292,7 +292,7 @@ namespace Geometry // объявляем пространство имён Geome
 		double get_perimeter()const override
 		{
 			return M_PI * get_diameter();
-		}
+		} 
 		void draw()const override
 		{
 			HWND hwnd = GetConsoleWindow();//FindWindow(NULL, "Inheritance - Microsoft Visual Studio");// L чтобы подхватывать строку в unicod
