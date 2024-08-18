@@ -26,7 +26,8 @@ namespace Geometry // объявляем пространство имён Geome
 	class Shape //Shape(Форма) - абстрактный класс с чисто виртуальными методами
 	{
 	protected: 
-		//Защищённые поля, доступны только внутри класса, и внутри его дочерних классов. Благодаря protected: к этим полям можно будет обращаться напрямую в дочерних классах без get set методов
+		//Защищённые поля, доступны только внутри класса, и внутри его дочерних классов.
+		//Благодаря protected: к этим полям можно будет обращаться напрямую в дочерних классах без get set методов
 		Color color;
 		//Координаты, по которым будет выводится фигура:
 		unsigned int start_x;
@@ -195,6 +196,7 @@ namespace Geometry // объявляем пространство имён Geome
 			//2) Получаем контекст устройства (Device Context) окна консоли.
 			// DC - это то, на чём будем рисовать
 			HPEN hPen = CreatePen(PS_SOLID, 5, get_color());
+			//https://learn.microsoft.com/ru-ru/windows/win32/gdi/colorref
 			//3) Создаём карандаш. pen рисует контур фигуры.
 			// PS_SOLID - сплошная линия
 			// 5 - толщина линии в пикселах
@@ -205,7 +207,7 @@ namespace Geometry // объявляем пространство имён Geome
 			SelectObject(hdc, hBrush);
 
 			//6) Рисуем прямоугольник:
-			::Rectangle(hdc, start_x, start_y, /*start_x + width*/800,/*start_y + height*/ 350); 
+			::Rectangle(hdc, start_x, start_y, start_x + width/*800*/,start_y + height /*350*/); 
 			//start_x, start_y - координаты верхнего левого угла
 			//800,350 - координаты нижнего правого угла.
 
@@ -393,15 +395,15 @@ void main()
 	setlocale(LC_ALL, "");
 	//Square shape(Color::CONSOLE_BLUE);
 	//Geometry::Square square(5, Geometry::CONSOLE_RED);
-	Geometry::Square square(10, 300, 50, 5, Geometry::Color::BLUE);
+	Geometry::Square square(50, 200, 250, 5, Geometry::Color::CONSOLE_BLUE);
 	/*cout << "Длина стороны квадрата: " << square.get_side() << endl;
 	cout << "Площадь квадрата: " << square.get_area() << endl;
 	cout << "Периметр квадрата: " << square.get_perimeter() << endl;
 	square.draw();*/
 	square.info();
 
-	/*Geometry::Rectangle rect(150, 80, 500, 50, 3, Geometry:: Color::BLUE);
-	rect.info();*/
+	Geometry::Rectangle rect(150, 250, 400, 50, 3, Geometry:: CONSOLE_BLUE);
+	rect.info();
 
 	/*Geometry::Circle circle(75, 700, 50, 5, Geometry::Color::YELLOW);
 	circle.info();*/
