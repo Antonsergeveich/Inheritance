@@ -295,7 +295,6 @@ namespace Geometry // объявляем пространство имён Geome
 		}
 		void draw()const override
 		{
-			
 			HWND hwnd = GetConsoleWindow();//FindWindow(NULL, "Inheritance - Microsoft Visual Studio");// L чтобы подхватывать строку в unicod
 			//или в меню VS выбрать project-propertice-All Configurations, All Platforms-Advanced-Character Set(Use Multi-Byte Character Set)
 			//1)Возвращает дискриптор окна консоли. 
@@ -315,11 +314,13 @@ namespace Geometry // объявляем пространство имён Geome
 			SelectObject(hdc, hBrush);
 
 			::Ellipse(hdc, start_x, start_y, start_x + get_diameter(), start_y + get_diameter());
-
+			//Функция Ellipse рисует круг
+			//https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-ellipse
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
 
 			ReleaseDC(hwnd, hdc);//Функция ReleaseDC освобождает контекст устройства (DC)
+			//Если не написать ReleaseDC то произойдёт утечка памяти
 		}
 		void info()const override
 		{
