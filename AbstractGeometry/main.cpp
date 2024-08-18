@@ -385,7 +385,7 @@ namespace Geometry // объявляем пространство имён Geome
 			};
 
 			::Polygon(hdc, apt, 3);//Функция Polygon рисует многоугольник, состоящий из двух или более вершин, соединенных прямыми линиями.
-
+			//https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-polygon
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
 
@@ -421,8 +421,8 @@ void main()
 	/*Geometry::Rectangle rect(150, 250, 400, 50, 3, Geometry:: BLUE);
 	rect.info();*/
 
-	Geometry::Circle circle(75, 800, 150, 5, Geometry::Color::YELLOW);
-	circle.info();
+	/*Geometry::Circle circle(75, 800, 150, 5, Geometry::Color::YELLOW);
+	circle.info();*/
 
 	/*Geometry::Rectangle rect{ 150, 80, 500, 50, 3, Geometry::Color::GREEN};
 	rect.info();*/
@@ -430,8 +430,8 @@ void main()
 	/*Geometry::Circle circle(1, 500, 100, 2, Geometry::Color::RED);
 	circle.info();*/
 
-	/*Geometry::EquilateralTriangle e_triangle(5, 200, 300, 150, Geometry::Color::RED);
-	e_triangle.info();*/
+	Geometry::EquilateralTriangle e_triangle(5, 200, 300, 150, Geometry::Color::RED);
+	e_triangle.info();
 
 	/*cout << "Количество фигур: " << e_triangle.get_count() << endl;
 	cout << "Количество фигур: " << Geometry::Shape::get_count() << endl;*/
