@@ -295,7 +295,9 @@ namespace Geometry // объявляем пространство имён Geome
 		}
 		void draw()const override
 		{
-			HWND hwnd = GetConsoleWindow();
+			
+			HWND hwnd = GetConsoleWindow();//FindWindow(NULL, "Inheritance - Microsoft Visual Studio");// L чтобы подхватывать строку в unicod
+			//или в меню VS выбрать project-propertice-All Configurations, All Platforms-Advanced-Character Set(Use Multi-Byte Character Set)
 			//1)Возвращает дискриптор окна консоли. 
 			//description - переменная в которой хранится описание чего-то;
 			//HWND - Handler to Window (обработчик (Дискриптор) окна)
