@@ -197,7 +197,7 @@ namespace Geometry // объявляем пространство имён Geome
 			// DC - это то, на чём будем рисовать
 			HPEN hPen = CreatePen(PS_SOLID, 5, get_color());
 			//https://learn.microsoft.com/ru-ru/windows/win32/gdi/colorref
-			// в 16 цветов можно окрасить один пиксель, один пиксель - 4 бита;
+			// в 16 цветов можно окрасить один пиксель, один пиксель - 4 байта;
 			//3) Создаём карандаш. pen рисует контур фигуры.
 			// PS_SOLID - сплошная линия
 			// 5 - толщина линии в пикселах
@@ -420,4 +420,7 @@ void main()
 
 	/*cout << "Количество фигур: " << e_triangle.get_count() << endl;
 	cout << "Количество фигур: " << Geometry::Shape::get_count() << endl;*/
+	cout << "UINT16_MAX = " << UINT16_MAX << endl;//65 535
+	cout << "UINT32_MAX = " << UINT32_MAX << endl;//4 294 967 295
+	cout << "UINT64_MAX = " << UINT64_MAX << endl;//18 446 744 073 709 551 615
 }
