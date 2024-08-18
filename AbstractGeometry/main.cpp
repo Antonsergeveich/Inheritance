@@ -396,14 +396,14 @@ void main()
 	setlocale(LC_ALL, "");
 	//Square shape(Color::CONSOLE_BLUE);
 	//Geometry::Square square(5, Geometry::CONSOLE_RED);
-	Geometry::Square square(50, 200, 250, 5, Geometry::Color::CONSOLE_BLUE);
+	Geometry::Square square(50, 200, 250, 5, Geometry::Color::BLUE);
 	/*cout << "Длина стороны квадрата: " << square.get_side() << endl;
 	cout << "Площадь квадрата: " << square.get_area() << endl;
 	cout << "Периметр квадрата: " << square.get_perimeter() << endl;
 	square.draw();*/
 	square.info();
 
-	Geometry::Rectangle rect(150, 250, 400, 50, 3, Geometry:: CONSOLE_BLUE);
+	Geometry::Rectangle rect(150, 250, 400, 50, 3, Geometry:: BLUE);
 	rect.info();
 
 	/*Geometry::Circle circle(75, 700, 50, 5, Geometry::Color::YELLOW);
