@@ -317,7 +317,7 @@ namespace Geometry // объявляем пространство имён Geome
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
 
-			ReleaseDC(hwnd, hdc);
+			ReleaseDC(hwnd, hdc);//Функция ReleaseDC освобождает контекст устройства (DC)
 		}
 		void info()const override
 		{
@@ -402,7 +402,6 @@ namespace Geometry // объявляем пространство имён Geome
 		}
 	};
 }
-
 
 void main()
 {
